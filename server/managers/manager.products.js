@@ -1,3 +1,5 @@
+const { title } = require("process");
+
 const fs = require("fs").promises;
 class Products
 {
@@ -23,8 +25,17 @@ class Products
         const productos = await this.leerJSON();
     
         const nuevoId = productos.length > 0 ? productos[productos.length - 1].id + 1 : 1;
-
-        const nuevoProducto = { id: nuevoId, nombre: newproduct[0].nombre, edad: newproduct[0].edad };
+        
+        const nuevoProducto = { id: nuevoId, 
+                                title: newproduct[0].title, 
+                                description: newproduct[0].description,
+                                code: newproduct[0].code,
+                                price: newproduct[0].price,
+                                status: newproduct[0].status,
+                                stock: newproduct[0].stock,
+                                categoty: newproduct[0].categoty,
+                                thumbnails: newproduct[0].thumbnails
+                             };
 
         productos.push(nuevoProducto); 
         await this.escribirJSON(productos);

@@ -30,6 +30,7 @@ const getProdById = async (req, res) => {
 };
 
 const addNewProduct = async (req, res) => {
+    console.log(req.body)
     try {
         const { title, description, code, price, status, stock, category, thumbnails } = req.body;
 
@@ -37,7 +38,7 @@ const addNewProduct = async (req, res) => {
             return res.status(400).json({ message: "Faltan campos obligatorios" });
         }
 
-        const nuevoProducto = await addProduct([{ nombre, edad }]);
+        const nuevoProducto = await addProduct([{ title, description, code, price, status, stock, category, thumbnails }]);
 
         res.status(201).json({ message: "Producto agregado", producto: nuevoProducto });
     } catch (error) {
