@@ -22,17 +22,16 @@ class Products
     async addProduct(newproduct) {
         const productos = await this.leerJSON();
 
-        // Generar un ID único (usando la longitud del array + 1)
         const nuevoId = productos.length > 0 ? productos[productos.length - 1].id + 1 : 1;
-        console.log(nuevoId)
-        const nuevoProducto = { id: nuevoId }; // Agrega el ID generado
 
+        const nuevoProducto = { id: nuevoId };
+        
         newproduct.forEach(element => {
             console.log(element)
-        }); 
+        });
 
-        productos.push(nuevoProducto); // Agregar el nuevo producto
-        await this.escribirJSON(productos); // Guardar en el archivo
+        productos.push(nuevoProducto); 
+        await this.escribirJSON(productos);
 
         return nuevoProducto;
     }
