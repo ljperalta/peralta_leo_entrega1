@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "nombre": "leo",
+    "edad": 27
+  },
+  {
+    "id": 2,
+    "newproduct": {
+      "nombre": "martin",
+      "edad": 30
+    }
+  }
+]
