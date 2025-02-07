@@ -1,4 +1,4 @@
-const { getAllProducts, getProductById, addProduct, deleteProductById } = require('../managers/manager.products');
+const { getAllProducts, getProductById, addProduct, updateProductById, deleteProductById } = require('../managers/manager.products');
 
 const getProds = async (req, res) => {
     try {
@@ -30,7 +30,6 @@ const getProdById = async (req, res) => {
 };
 
 const addNewProduct = async (req, res) => {
-    console.log(req.body)
     try {
         const { title, description, code, price, status, stock, category, thumbnails } = req.body;
 
@@ -46,6 +45,25 @@ const addNewProduct = async (req, res) => {
     }
 };
 
+const updateProdById = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const data = req.body;
+        console.log(id)
+        console.log(data)
+        //console.log([id, data])
+        const product = await updateProductById(id, data);
+        console.log(product)
+        if (product) {
+            res.status(200).json(product);
+        } else {
+            res.status(404).json({ message: `Producto con ID ${id} no encontrado` });
+        }
+    } catch (error) {
+        res.status(500).json({ message: "Error al actualizar el productoooo", error });
+    }
+};
+
 const deleteProdById = async (req, res) => {
     try {
         const id = req.params.id;
@@ -57,8 +75,8 @@ const deleteProdById = async (req, res) => {
             res.status(404).json({ message: `Producto con ID ${id} no encontrado` });
         }
     } catch (error) {
-        res.status(500).json({ message: "Error al buscar el productoooo", error });
+        res.status(500).json({ message: "Error al eliminar el productoooo", error });
     }
 };
 
-module.exports = { getProds, getProdById, addNewProduct, deleteProdById };
+module.exports = { getProds, getProdById, addNewProduct, updateProdById, deleteProdById };

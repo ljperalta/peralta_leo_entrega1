@@ -43,6 +43,18 @@ class Products
         return nuevoProducto;
     }
 
+    async updateProductById(id, data) {
+        console.log(data);
+        const productos = await this.leerJSON();
+
+        console.log('....=',data);
+
+        productos[id].price = data.price;
+        await this.escribirJSON(productos);
+
+        return productos[id];
+    }
+
     async deleteProductById(id) {
 
         let productos = await this.leerJSON();
@@ -82,8 +94,9 @@ prod = new Products('server/bd/bd.products.json')
 module.exports = {
     getAllProducts: async () => await prod.getProducts(),
     getProductById: async (id) => await prod.getProductById(id),
-    deleteProductById: async (id) => await prod.deleteProductById(id),
-    addProduct: async (producto) => await prod.addProduct(producto)
+    addProduct: async (producto) => await prod.addProduct(producto),
+    updateProductById: async (id, newPrice) => await prod.updateProductById(id, newPrice),
+    deleteProductById: async (id) => await prod.deleteProductById(id)
 };
 // const Products = require("../bd/bd.products.json");
 

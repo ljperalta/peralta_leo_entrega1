@@ -8,5 +8,15 @@
     "status": true,
     "stock": 30,
     "thumbnails": "/img/products/termo.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Mate",
+    "description": "Acero sin bombilla",
+    "code": "A2",
+    "price": 5,
+    "status": true,
+    "stock": 30,
+    "thumbnails": "/img/products/mate.jpg"
   }
 ]
