@@ -21,14 +21,10 @@ class Products
 
     async addProduct(newproduct) {
         const productos = await this.leerJSON();
-
+    
         const nuevoId = productos.length > 0 ? productos[productos.length - 1].id + 1 : 1;
 
-        const nuevoProducto = { id: nuevoId };
-        
-        newproduct.forEach(element => {
-            console.log(element)
-        });
+        const nuevoProducto = { id: nuevoId, nombre: newproduct[0].nombre, edad: newproduct[0].edad };
 
         productos.push(nuevoProducto); 
         await this.escribirJSON(productos);
