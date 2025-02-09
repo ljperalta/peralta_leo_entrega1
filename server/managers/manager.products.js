@@ -1,15 +1,12 @@
-const { title } = require("process");
+const { log } = require("console");
 
 const fs = require("fs").promises;
-class Products
+class ProductManager
 {
     #rutaArchivo;
 
     constructor(path){
-        //const fs = require("fs");
-        //this.products = require('../bd/bd.products.json')
         this.#rutaArchivo = path;
-        //this.fs = fs; // Usar el módulo fs de forma moderna
     }
 
     async getProducts(){
@@ -44,19 +41,22 @@ class Products
     }
 
     async updateProductById(id, data) {
-        console.log(data);
         const productos = await this.leerJSON();
+        console.log(productos)
+        const productoIndex = productos.findIndex(producto => producto.id === (Number(id) - 1));
+        console,log((Number(id) - 1));
+        console,log(productoIndex)
+        if (productoIndex === -1) {
+            return false; // No encontrado
+        }
 
-        console.log('....=',data);
-
-        productos[id].price = data.price;
+        productos[id-1].price = data.price;
         await this.escribirJSON(productos);
 
         return productos[id];
     }
 
     async deleteProductById(id) {
-
         let productos = await this.leerJSON();
         const productoIndex = productos.findIndex(producto => producto.id === Number(id));
 
@@ -89,7 +89,7 @@ class Products
 
 }
 
-prod = new Products('server/bd/bd.products.json')
+prod = new ProductManager('server/bd/bd.products.json')
 
 module.exports = {
     getAllProducts: async () => await prod.getProducts(),
@@ -98,10 +98,3 @@ module.exports = {
     updateProductById: async (id, newPrice) => await prod.updateProductById(id, newPrice),
     deleteProductById: async (id) => await prod.deleteProductById(id)
 };
-// const Products = require("../bd/bd.products.json");
-
-// const getAllProducts = () => {
-//     return Products.length ? Products : null
-// };
-
-// module.exports = { getAllProducts };

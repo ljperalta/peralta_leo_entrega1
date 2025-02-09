@@ -49,9 +49,7 @@ const updateProdById = async (req, res) => {
     try {
         const id = req.params.id;
         const data = req.body;
-        console.log(id)
-        console.log(data)
-        //console.log([id, data])
+
         const product = await updateProductById(id, data);
         console.log(product)
         if (product) {
