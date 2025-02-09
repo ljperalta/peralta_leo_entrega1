@@ -14,48 +14,46 @@ class CartManager {
         return carts.find(carrito => carrito.id === Number(id)) || null;
     }
 
-    // #generateId = async () => {
-    //     const carts = await this.getCarts()
-    //     return carts.length === 0 ? 1 : carts[carts.length - 1].id + 1
-    // }
+    async addCart() {
+        const carts = await this.leerJSON();
 
-    // addCart = async (products) => {
-    //     const carts = await this.getCarts()
-    //     const newCart = {
-    //         id: await this.#generateId(),
-    //         products: (products = [])
-    //     }
-    //     carts.push(newCart)
-    //     await fs.promises.writeFile(this.#rutaArchivo, JSON.stringify(carts, null, '\t'))
-    //     this.carts = carts 
-    //     return newCart
-    // }
+        const newCart = {
+            id: carts.length === 0 ? 1 : carts[carts.length - 1].id + 1,
+            products: []
+        };
 
-    // addProductsToCart = async (cartId, productId) => {
-    //     const products = productManager.getProductById(productId)
-    //     // if (!products) {
-    //     //     return Error : 'the product with id:${productId} does not exist'
-    //     // }
-    //     let carts = await this.getCarts()
-    //     const cart = await this.getCartById(cartId)
-    //     if (!cart) return null
-    //     const productExistsInCart = cart.products.find(item => item.product === productId)
-    //     if (productExistsInCart) {
-    //         productExistsInCart.quantity++
-    //     } else {
-    //         const product = {
-    //             product: productId,
-    //             quantity: 1
-    //         }
-    //         cart.products.push(product)
-    //     }
-    //     const cartIndex = carts.findIndex(item => item.id === cartId)
-    //     if (cartIndex !== -1) {
-    //         carts[cartIndex] = cart
-    //     }
-    //     await fs.promises.writeFile(this.#rutaArchivo, JSON.stringify(carts, null, '\t'))
-    //     return cart
-    // }
+        carts.push(newCart);
+        await this.escribirJSON(carts);
+
+        return newCart;
+    }
+
+    async addProductsToCart(cartId, productId) {
+        const carts = await this.leerJSON();
+        const cartIndex = carts.findIndex(cart => cart.id === Number(cartId));
+    
+        if (cartIndex === -1) {     return { error: `Carrito con ID ${cartId} no encontrado` };     }
+        /* else {
+            this.addCart();
+            const cartIndex = carts.findIndex(cart => cart.id === Number(cartId));
+        }*/
+        //console.log(cartIndex)
+        const cart = carts[cartIndex];
+        //console.log(cart)
+        const productIndex = cart.products.findIndex(item => item.product === Number(productId));
+        //console.log(productIndex)
+        if (productIndex !== -1) {
+            cart.products[productIndex].quantity++; // Si existe, incremento cantidad
+        } else {
+            cart.products.push({ product: Number(productId), quantity: 1 }); // Si no, locreo con cantidad 1
+        }
+    
+        carts[cartIndex] = cart; // Actualizar carrito en la lista
+    
+        await this.escribirJSON(carts); // Guardar en el JSON
+        return cart;
+    }
+    
 
     async leerJSON() {
         try {
@@ -79,6 +77,8 @@ class CartManager {
 const cartManager = new CartManager('server/bd/carts.json')
 
 module.exports = {
-    getCart: async (id) => await cartManager.getCart(id),
+    getCart: async () => await cartManager.getCart(),
     getCartById: async (id) => await cartManager.getCartById(id),
+    addCart: async () => await cartManager.addCart(),
+    addProductsToCart: async (idCart, idProduct) => await cartManager.addProductsToCart(idCart, idProduct)
 };
