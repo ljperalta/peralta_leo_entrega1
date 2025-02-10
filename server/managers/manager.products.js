@@ -50,7 +50,14 @@ class ProductManager
             return false; // No encontrado
         }
 
-        productos[id-1].price = data.price;
+        const productoActual = productos[productoIndex];
+
+        // Crear un nuevo objeto actualizado, preservando el ID
+        productos[productoIndex] = { 
+            ...productoActual, 
+            ...data, 
+            id: productoActual.id // Asegurar que el ID no se modifique 
+        };
         await this.escribirJSON(productos);
 
         return productos[id];
