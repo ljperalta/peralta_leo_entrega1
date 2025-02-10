@@ -42,10 +42,9 @@ class ProductManager
 
     async updateProductById(id, data) {
         const productos = await this.leerJSON();
-        console.log(productos)
-        const productoIndex = productos.findIndex(producto => producto.id === (Number(id) - 1));
-        console,log((Number(id) - 1));
-        console,log(productoIndex)
+        console.log(id)
+        const productoIndex = productos.findIndex(producto => producto.id === (Number(id)));
+
         if (productoIndex === -1) {
             return false; // No encontrado
         }
@@ -58,9 +57,11 @@ class ProductManager
             ...data, 
             id: productoActual.id // Asegurar que el ID no se modifique 
         };
+        console.log(id)
+        console.log(productos[productoIndex])
         await this.escribirJSON(productos);
 
-        return productos[id];
+        return productos[productoIndex];
     }
 
     async deleteProductById(id) {

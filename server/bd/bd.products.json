@@ -4,7 +4,7 @@
     "title": "Termo",
     "description": "1 Litro, Acero",
     "code": "A1",
-    "price": 10000,
+    "price": 21,
     "status": true,
     "stock": 30,
     "thumbnails": "/img/products/termo.jpg"
@@ -14,9 +14,10 @@
     "title": "Mate",
     "description": "Acero sin bombilla",
     "code": "A2",
-    "price": 5,
+    "price": 444444,
     "status": true,
-    "stock": 30,
-    "thumbnails": "/img/products/mate.jpg"
+    "stock": 2222222,
+    "thumbnails": "/img/products/mate.jpg",
+    "stoc": 2222222
   }
 ]

@@ -51,7 +51,7 @@ const updateProdById = async (req, res) => {
         const data = req.body;
 
         const product = await updateProductById(id, data);
-        console.log(product)
+        
         if (product) {
             res.status(200).json(product);
         } else {
